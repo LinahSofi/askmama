@@ -18,12 +18,15 @@ function Navbar() {
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">Home</Nav.Link> {/* ✅ now links to landing */}
             {token ? (
-              <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+              </>
             ) : (
               <>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link> {/* ✅ fixed path */}
                 <Nav.Link as={Link} to="/register">Register</Nav.Link>
-                <Nav.Link as={Link} to="/">Login</Nav.Link>
               </>
             )}
           </Nav>

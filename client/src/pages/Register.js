@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
-import API from '../api'; // ✅ Use shared axios baseURL
+import API from '../api'; // ✅ Axios instance with baseURL
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -19,7 +19,7 @@ function Register() {
     }
 
     try {
-      const res = await API.post('/auth/register', {
+      const res = await API.post('/api/auth/register', {
         username,
         password,
       });
@@ -39,21 +39,21 @@ function Register() {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername" className="mb-3">
           <Form.Label>Username</Form.Label>
-          <Form.Control 
-            type="text" 
+          <Form.Control
+            type="text"
             placeholder="Enter username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)} 
+            onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
 
         <Form.Group controlId="formPassword" className="mb-3">
           <Form.Label>Password</Form.Label>
-          <Form.Control 
-            type="password" 
+          <Form.Control
+            type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} 
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
 
