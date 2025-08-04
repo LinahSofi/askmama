@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
+import API from '../api'; // ✅ Use shared axios baseURL
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -19,15 +19,15 @@ function Register() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5050/api/auth/register', {
+      const res = await API.post('/auth/register', {
         username,
-        password
+        password,
       });
 
       localStorage.setItem('token', res.data.token);
       navigate('/dashboard');
     } catch (err) {
-      console.error(err);
+      console.error('Registration failed:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Registration failed.');
     }
   };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import CategoriesSidebar from '../components/CategoriesSidebar';
+import API from '../api'; // ✅ import shared axios instance
 
 function Dashboard() {
   const [categories, setCategories] = useState([]);
@@ -9,7 +8,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('http://localhost:5050/api/categories');
+        const res = await API.get('/categories'); // ✅ clean endpoint path
         setCategories(res.data);
       } catch (err) {
         console.error('Failed to fetch categories:', err);
@@ -23,21 +22,7 @@ function Dashboard() {
     <div className="mt-4">
       <h2>Welcome to AskMama</h2>
       <p>Select a category to view questions:</p>
-
-      <div className="row">
-        {categories.map((cat) => (
-          <div className="col-md-4 mb-3" key={cat._id}>
-            <Card>
-              <Card.Body>
-                <Card.Title>{cat.name}</Card.Title>
-                <Link to={`/category/${cat._id}`}>
-                  <Button variant="primary">View Questions</Button>
-                </Link>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
-      </div>
+      <CategoriesSidebar categories={categories} />
     </div>
   );
 }

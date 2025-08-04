@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API from '../api'; // ✅ central axios instance with baseURL set
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -19,7 +19,7 @@ function Login() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5050/api/auth/login', {
+      const res = await API.post('/auth/login', {
         username,
         password,
       });

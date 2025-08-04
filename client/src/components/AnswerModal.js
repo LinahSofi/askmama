@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import API from '../api';
 
 function AnswerModal({ show, handleClose, questionId, onAnswerSubmitted }) {
   const [text, setText] = useState('');
@@ -8,19 +9,37 @@ function AnswerModal({ show, handleClose, questionId, onAnswerSubmitted }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     if (!text) {
       setError('Answer text is required.');
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:5050/api/answers', {
-        question: questionId,
-        user: '68783db3cf5e4872873923cc', // hardcoded demo user for now
-        text
-      });
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId'); // make sure you store this at login/register
 
-      onAnswerSubmitted(res.data); // pass answer up
+      if (!userId) {
+        setError('User not logged in.');
+        return;
+      }
+
+      const res = await axios.post(
+        `${API}/api/answers`,
+        {
+          question: questionId,
+          user: userId,
+          text,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      onAnswerSubmitted(res.data);
       setText('');
       handleClose();
     } catch (err) {

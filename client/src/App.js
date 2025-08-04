@@ -8,6 +8,19 @@ import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import axios from 'axios';
+
+axios.interceptors.response.use(
+  res => res,
+  err => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(err);
+  }
+);
+
 function App() {
   return (
     <Router>
@@ -24,7 +37,14 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/category/:id" element={<QuestionView />} />
+          <Route
+            path="/category/:id"
+            element={
+              <PrivateRoute>
+                <QuestionView />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>
