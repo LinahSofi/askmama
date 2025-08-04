@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Question = require('../models/question');
+const Question = require('../models/Question'); // ✅ Fixed: capital "Q"
 
 // ✅ Get all questions
 router.get('/', async (req, res) => {
