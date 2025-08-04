@@ -77,6 +77,13 @@ askmama/
 ├── .env           # Environment variables
 ```
 
+---
+
+## 🌐 Live Demo
+
+- **Frontend (Netlify)**: [https://comforting-malabi-a28bb1.netlify.app](https://comforting-malabi-a28bb1.netlify.app)
+- **Backend (Render)**: [https://askmama.onrender.com](https://askmama.onrender.com)
+- **GitHub Repository**: [https://github.com/LinahSofi/askmama](https://github.com/LinahSofi/askmama)
 
 ## Author
 
