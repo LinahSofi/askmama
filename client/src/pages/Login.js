@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import API from '../api'; // ✅ central axios instance with baseURL set
+import API from '../api'; // centralized axios instance
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -19,7 +19,7 @@ function Login() {
     }
 
     try {
-      const res = await API.post('/auth/login', {
+      const res = await API.post('/api/auth/login', {
         username,
         password,
       });
@@ -28,7 +28,8 @@ function Login() {
       navigate('/dashboard');
     } catch (err) {
       console.error('Login failed:', err.response?.data || err.message);
-      setError(err.response?.data?.message || 'Login failed');
+      const msg = err.response?.data?.message || 'Login failed. Please try again.';
+      setError(msg);
     }
   };
 
